@@ -13,6 +13,8 @@ cd dictionary
 
 echo 'Extracing the dict file...'
 xz -d *
-export DICTIONARY_FILE="$(realpath websters_dictionary.txt)"
 
 echo 'Everything done!'
+echo 'Now put this line below at the top of your .bashrc or config.fish file depending on the shell you use. Then restart the shell'
+echo 
+echo "export DICTIONARY_FILE=$(realpath websters_dictionary.txt)"
