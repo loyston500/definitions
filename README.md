@@ -1,5 +1,10 @@
 # Definitions  
-A simple dictionary for you.  
+A simple, fast and offline dictionary for you. [LINUX ONLY]
+
+## Table of content
+  * [Usage](#usage)
+  * [Source](#source)
+  * [Installation](#installation)
 
 ## Usage  
 Easy, just do this thing below and you get your definition.  
