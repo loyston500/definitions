@@ -11,7 +11,7 @@ sudo cp target/release/definitions /usr/local/bin/def # you can change `def` wit
 # extracting and linking the dict file
 cd dictionary
 
-echo 'Extracing the dict file...'
+echo 'Extracting the dict file...'
 xz -d *
 
 echo 'Everything done!'
