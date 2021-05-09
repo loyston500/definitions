@@ -7,8 +7,8 @@ use std::fs::File;
 use std::io::{BufReader, Read};
 use std::process::exit;
 
-use difflib::get_close_matches as gcm;
 use colored::*;
+use difflib::get_close_matches as gcm;
 
 #[allow(dead_code)]
 fn file_content(file_name: &str) -> Result<String, Box<dyn Error>> {
@@ -41,28 +41,31 @@ fn print_definition(some_word: Option<&str>, definition: &str) {
 }
 
 fn main() {
-    const PARSE_FAIL_MSG: &str = 
+    const PARSE_FAIL_MSG: &str =
         "Are you sure the provided file is a valid dictionary file? Maybe try removing the entire line or reinstall the file.";
 
-    const DICT_ENV_ERR_MSG: &str = 
+    const DICT_ENV_ERR_MSG: &str =
         "Dictionary file path is not defined in your env. Try executing:";
 
-    const DICT_ENV_ERR_TRY: &str = 
+    const DICT_ENV_ERR_TRY: &str =
         "export DICTIONARY_FILE='put absolute path of the dictionary file here'";
 
-    const FILE_ERR_MSG: &str =
-        "The dictionary file does not exist.";
+    const FILE_ERR_MSG: &str = "The dictionary file does not exist.";
 
     const FILE_ERR_TRY: &str =
         "Are you sure that the path you set is a valid absolute path to the dictionary file?";
 
-    const HELP: &str = 
-        "Get the definition of any english word offline. Thanks for using :)";
+    const HELP: &str = "Get the definition of any english word offline. Thanks for using :)";
 
     let args: Vec<String> = env::args().collect::<Vec<String>>();
 
     if args.len() == 1 || args[1] == "--help" {
-        println!("Usage:\n  {} {}\nHelp:\n  {}", args[0].bold(), "<word>".bold(), HELP.blue());
+        println!(
+            "Usage:\n  {} {}\nHelp:\n  {}",
+            args[0].bold(),
+            "<word>".bold(),
+            HELP.blue()
+        );
         exit(0);
     }
 
@@ -84,15 +87,31 @@ fn main() {
     for (n, line) in data.lines().enumerate() {
         let mut line_split = line.splitn(2, ":");
 
-        let word = line_split.next().unwrap_or_else(|| {
-            println!("Failed to parse the word at line {}. The line:\n{}\n{}", n.to_string().blue(), line.red(), PARSE_FAIL_MSG.yellow());
-            exit(1);
-        }).trim();
+        let word = line_split
+            .next()
+            .unwrap_or_else(|| {
+                println!(
+                    "Failed to parse the word at line {}. The line:\n{}\n{}",
+                    n.to_string().blue(),
+                    line.red(),
+                    PARSE_FAIL_MSG.yellow()
+                );
+                exit(1);
+            })
+            .trim();
 
-        let definition = line_split.next().unwrap_or_else(|| {
-            println!("Failed to parse the definition at line {}. The line:\n{}\n{}", n.to_string().blue(), line.red(), PARSE_FAIL_MSG.yellow());
-            exit(1);
-        }).trim();
+        let definition = line_split
+            .next()
+            .unwrap_or_else(|| {
+                println!(
+                    "Failed to parse the definition at line {}. The line:\n{}\n{}",
+                    n.to_string().blue(),
+                    line.red(),
+                    PARSE_FAIL_MSG.yellow()
+                );
+                exit(1);
+            })
+            .trim();
 
         if word == arg_word {
             print_definition(None, definition);
@@ -115,8 +134,11 @@ fn main() {
         close_matches.join(", ").yellow().italic()
     );
     println!("{}", "Giving definition of the closest match..\n");
-    
-    print_definition(Some(&close_matches[0]), dict.get(&close_matches[0]).unwrap());
+
+    print_definition(
+        Some(&close_matches[0]),
+        dict.get(&close_matches[0]).unwrap(),
+    );
 
     exit(0);
 }
